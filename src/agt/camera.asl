@@ -3,9 +3,9 @@
 //e por último se a pessoa está presente ou não em casa, para saber se está entrando ou saindo
 
 proprietario(jonas).
-pessoa_presente(jonas).
+pessoa_presente(jonas). //para ver modo invasão, basta colocar outro nomes que não seja "jonas"
 local(porta).
-presenca_casa(fora). 
+presenca_casa(fora). //para quando o proprietario esta saindo, basta colocar "dentro"
 
 //definindo condições iniciais dos agentes:
 //estava dando um erro "No fail event was generated for" para os agentes 
