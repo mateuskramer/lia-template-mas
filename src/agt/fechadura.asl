@@ -1,10 +1,20 @@
+//Condições iniciais
+
+
++condicoes_inicias(fora) 
+  	<- 	+fechada(true);
+     	+trancada(true).
+
++condicoes_inicias(dentro)
+  	<- 	+fechada(false);
+     	+trancada(false). 
 
 !inicializar_fechadura.
 
 +!inicializar_fechadura
   <- 	makeArtifact("fechadura_quarto","artifacts.Fechadura",[],D);
-  	   	focus(D);
-  	   	!fechar_porta.
+  	   	focus(D).
+  	   	
   	   	
 +movimento_macaneta <- !verificar_fechada.
 
@@ -23,20 +33,47 @@
   <-  .print("Alguém mexeu na FECHADURA e DESTRANCOU a porta!").
       
 +closed  <-  .print("Close event from GUIInterface").
-   
+
+
++proprietario_chegou <- !abrir_porta.
++proprietario_saiu <- !trancar_porta.
++!invasao <- !trancar_porta.
+
+
++!abrir_porta: fechada(true) & trancada(false)
+	<- .print("ABRI a porta");
+		-+fechada(false).
+
++!abrir_porta: fechada(true) & trancada(true)
+	<- !destrancar_porta.
+
++!abrir_porta: fechada(false) 
+	<- .print("Porta aberta!").
+
++!destrancar_porta: trancada(true)
+	<-	.print("Porta destracada");
+		-+trancada(false);
+		!abrir_porta.
+
+
 +!fechar_porta: fechada(true)
  	<-  .print("Porta Fechada!");
  		!trancar_porta.
  	
 +!fechar_porta: fechada(false)
- 	<-  fechar;
- 		.print("FECHEI a porta");
+ 	<-  .print("FECHEI a porta");
+		-+fechada(true);
  		!fechar_porta.
  		
 +!trancar_porta: trancada(true)
  	<- .print("Porta Trancada!").
  	
-+!trancar_porta: trancada(false)
- 	<- 	trancar;
- 		.print("TRANQUEI a porta!");
- 		!trancar_porta.
++!trancar_porta: trancada(false) & fechada(true)
+ 	<- 	.print("TRANQUEI a porta!");
+		-+trancada(true).
+
++!trancar_porta: trancada(false) & fechada(false)
+	<-	!fechar_porta.
+
+
+	
