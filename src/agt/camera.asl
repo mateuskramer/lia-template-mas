@@ -1,13 +1,16 @@
 
-//As crenças criadas foram o nome do proprietário, a pessoa que a câmera detecta,
-//o local em que a câmera detecta, e por último se a pessoa está presente ou não em casa
+//As crenças criadas foram o nome do proprietário, a pessoa que a câmera detecta, o local em que a câmera detecta
+//e por último se a pessoa está presente ou não em casa, para saber se está entrando ou saindo
 
 proprietario(jonas).
 pessoa_presente(outro).
 local(porta).
 presenca_casa(dentro). 
 
-//condições iniciais dos agentes:
+//definindo condições iniciais dos agentes:
+//estava dando um erro "No fail event was generated for" para os agentes 
+//que pelo que pesquisei, tinha que colocar condiçoes inicias
+
 !iniciar.
 +!iniciar: presenca_casa(E)
   <- .broadcast(tell, condicoes_inicias(E)).
@@ -42,7 +45,7 @@ presenca_casa(dentro).
 
 +!verificar_pessoa: pessoa_presente(P) & proprietario(PO) & P \== PO 
   <-  .print("Desconhecido entrou em casa");
-      .broadcast(tell, invasao).
+      .broadcast(achieve, invasao).
       
      
 
