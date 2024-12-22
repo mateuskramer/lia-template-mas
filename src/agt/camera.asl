@@ -3,9 +3,9 @@
 //e por último se a pessoa está presente ou não em casa, para saber se está entrando ou saindo
 
 proprietario(jonas).
-pessoa_presente(outro).
+pessoa_presente(jonas).
 local(porta).
-presenca_casa(dentro). 
+presenca_casa(fora). 
 
 //definindo condições iniciais dos agentes:
 //estava dando um erro "No fail event was generated for" para os agentes 
