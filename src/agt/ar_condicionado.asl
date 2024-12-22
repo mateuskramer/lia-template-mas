@@ -4,15 +4,38 @@
 
 temperatura_de_preferencia(jonas,25).
 
++condicoes_inicias(fora)
+  	<- 	+ligado(false);
+     	+temperatura_ambiente(28);
+     	+temperatura_ac(25);
+		+temperatura_de_preferencia(jonas,25).
+
++condicoes_inicias(dentro)
+  	<- 	+ligado(true);
+     	+temperatura_ambiente(25);
+     	+temperatura_ac(25);
+		+temperatura_de_preferencia(jonas,25).
+
 /* Initial goals */
 
 !inicializar_AC.
 
 +!inicializar_AC
   <- 	makeArtifact("ac_quarto","artifacts.ArCondicionado",[],D);
-  	   	focus(D);
-  	   	!definir_temperatura;
-  	   	!!climatizar.
+  	   	focus(D).
+
++proprietario_chegou 
+	<-	.wait(1000);  
+		!definir_temperatura.
+		
+
++proprietario_saiu 
+	<- 	!desligar.
+
++!invasao
+	<- 	-+temperatura_ac(40); //supondo que seja o máximo.
+		.print("Definindo temperatura máxima de 40 graus, protocolo de invasão.").
+
 
 +alterado : temperatura_ambiente(TA) & temperatura_ac(TAC)
   <-  .drop_intention(climatizar);
@@ -56,5 +79,13 @@ temperatura_de_preferencia(jonas,25).
  +!climatizar 
  	<- 	.print("Não foram implementadas outras opções.");
  		.print("Temperatura regulada.").
+
+
++!desligar: ligado(true)
+	<-	.print("Desliguei o ar");
+		-+ligado(false).
+
++!desligar: ligado(false)
+	<-	.print("Ar deligado").
 
 
